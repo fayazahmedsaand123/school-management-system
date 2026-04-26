@@ -1,0 +1,66 @@
+<?php
+
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TenantController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\EnrollmentController;
+use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+//  Route::get('/', function () {
+//     return Inertia::render('Welcome', [
+//         'canLogin' => Route::has('login'),
+//         'canRegister' => Route::has('register'),
+//         'laravelVersion' => Application::VERSION,
+//         'phpVersion' => PHP_VERSION,
+//     ]);
+// });
+
+Route::get('/', function () {
+    return redirect()->route('login');
+});
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])
+    ->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+
+Route::resource('teachers', TeacherController::class)->middleware('auth');
+
+Route::resource('tenants', TenantController::class)->middleware('auth');
+
+Route::resource('courses', CourseController::class)->middleware('auth');
+
+Route::resource('students',StudentController::class)->middleware('auth');
+
+Route::resource('enrollments', EnrollmentController::class)
+    ->only(['index', 'create', 'store', 'destroy'])
+    ->middleware('auth');
+
+Route::get('/switch-tenant/{id}', function ($id) {
+    $tenant = \App\Models\Tenant::findOrFail($id);
+    session(['tenant_id' => $tenant->id]);
+    return redirect()->route('dashboard')->with('success', 'Switched to ' . $tenant->name);
+})->middleware('auth')->name('switch.tenant');
+
+require __DIR__.'/auth.php';
