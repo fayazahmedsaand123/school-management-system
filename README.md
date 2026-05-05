@@ -1,8 +1,8 @@
 # 🏫 School Management System
-### Built with Laravel + React
+### Built with Laravel + Bootstrap + Blade
 
-A full-featured multi-tenant School Management System 
-built from scratch using Laravel 11 and React.js.
+A full-featured School Management System
+built from scratch using Laravel 11, Bootstrap 5, and Blade.
 
 ---
 
@@ -32,10 +32,10 @@ built from scratch using Laravel 11 and React.js.
 | Layer     | Technology              |
 |-----------|-------------------------|
 | Backend   | Laravel 11, PHP 8       |
-| Frontend  | React.js, Inertia.js    |
+| Frontend  | Bootstrap 5, Blade      |
 | Database  | MySQL                   |
 | Styling   | Bootstrap 5, CSS        |
-| Auth      | Laravel Breeze          |
+| Auth      | Laravel Breeze Auth     |
 
 ---
 
@@ -79,7 +79,7 @@ npm run dev
 
 **Fayaz Ahmed**
 - GitHub: [@fayazahmedsaand123](https://github.com/fayazahmedsaand123)
-- Email: Fayazahmedsaand@gmail.com
+- Email: Fayazahmedsaand93@gmail.com
 
 ---
 
